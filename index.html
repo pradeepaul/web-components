@@ -3,7 +3,7 @@
   <head>
     <title>basic web components</title>
     <style>
-      .classic-btn {
+      .btn {
         background-color: #0070f3;
         color: white;
         border: none;
@@ -14,10 +14,10 @@
         font-size: 12px;
         box-shadow: 0px 4px, 14px rgba(0, 118, 225, 0.39);
       }
-      .classic-btn:hover {
+      .btn:hover {
         background-color: #1d80f0;
       }
-      .classic-btn:disabled {
+      .btn:disabled {
         background-color: #6aa8f0;
       }
       .fading {
@@ -39,21 +39,62 @@
     </style>
   </head>
   <body>
-    <button class="classic-btn" onclick="logAction()">click me</button>
+    <app-button
+      id="classic-btn-login"
+      onclick="login()"
+      text="login"
+    ></app-button>
+    <app-button id="classic-btn-register" onclick="register()" text="register">
+      register
+    </app-button>
     <script>
-      const btn = document.querySelector('.classic-btn');
-      const logAction = () => {
-        console.log('click');
-        const actualdata = btn.textContent;
-        btn.textContent = 'loading ...';
-        btn.setAttribute('disabled', 'true');
-        btn.classList.add('fading');
+      const loginBtn = document.querySelector('#classic-btn-login');
+      const registerBtn = document.querySelector('#classic-btn-register');
+
+      const login = () => {
+        const actualdata = loginBtn.textContent;
+        loginBtn.setAttribute('inprogress', 'true');
         setTimeout(() => {
-          btn.textContent = actualdata;
-          btn.removeAttribute('disabled');
-          btn.classList.remove('fading');
+          loginBtn.removeAttribute('inprogress');
         }, 1000);
       };
+      const register = () => {
+        const actualdata = registerBtn.textContent;
+        registerBtn.setAttribute('inprogress', 'true');
+        setTimeout(() => {
+          registerBtn.removeAttribute('inprogress');
+        }, 1000);
+      };
+
+      const temp = () => {
+        console.log('temp clicked');
+      };
+
+      class Button extends HTMLElement {
+        constructor() {
+          super();
+          const text = this.getAttribute('text');
+          this.innerHTML = `<button class="btn">${text}</button>`;
+        }
+
+        static get observedAttributes() {
+          return ['inprogress'];
+        }
+
+        attributeChangedCallback(attr, old, newval) {
+          const button = this.querySelector('button');
+          if (newval) {
+            button.textContent = 'loading ...';
+            button.setAttribute('disabled', true);
+            button.classList.add('fading');
+          } else {
+            button.textContent = this.getAttribute('text');
+            button.classList.remove('fading');
+            button.removeAttribute('disabled');
+          }
+        }
+      }
+      customElements.define('app-button', Button);
     </script>
   </body>
 </html>
