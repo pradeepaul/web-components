@@ -1,19 +1,36 @@
-
 class Counter extends HTMLElement {
-  // initialize a variable or an attribute
   constructor() {
     super();
+    console.log("constructor");
+    this.count = 0;
   }
-  // dom manipulation to be done
-  connectedCallback() {
-    this.innerHTML = 'counter';
-  }
-  // remove the dom manipulations
-  disconnectedCallback() { }
-  // listen to the attribute change example inprogress,
-  attributeChangedCallback() { }
-  // move or chnage child node to iframe or modal
-  adoptedCallback() { }
-}
 
-customElements.define('app-counter', Counter);
+  connectedCallback() {
+    console.log("connected");
+    this.innerHTML = this.count;
+    const until = this.getAttribute("until");
+    this.interval = setInterval(() => {
+      console.log("interval is running", Date.now());
+      if (this.count < until) {
+        this.count += 1;
+        this.innerHTML = this.count;
+      } else {
+        clearInterval(this.interval);
+      }
+    }, 1000);
+  }
+
+  disconnectedCallback() {
+    console.log("disconnected");
+    clearInterval(this.interval);
+  }
+
+  attributeChangedCallback(attribute, oldVal, newVal) {
+    console.log("attribute changed");
+  }
+
+  adoptedCallback() {
+    console.log("adopted");
+  }
+}
+customElements.define("app-counter", Counter);
