@@ -45,34 +45,59 @@
       text="login"
     ></app-button>
     <app-button id="classic-btn-register" onclick="register()" text="register">
-      register
     </app-button>
+    <app-button id="classic-btn-register" onclick="add()" text="add">
+    </app-button>
+    <app-button id="classic-btn-register" onclick="remove()" text="remove">
+    </app-button>
+    <app-button id="classic-btn-register" onclick="move()" text="move">
+    </app-button>
+    <iframe></iframe>
     <script>
       const loginBtn = document.querySelector('#classic-btn-login');
       const registerBtn = document.querySelector('#classic-btn-register');
 
+      const add = () => {
+        const counter = document.createElement('app-counter');
+        document.body.append(counter);
+      };
+
+      const remove = () => {
+        document.querySelector('app-counter').remove();
+      };
+
+      const move = () => {
+        const iframe = document.querySelector('iframe');
+        const doc = document.implementation.createHTMLDocument('new document');
+        const destDocument = iframe.contentDocument;
+        destDocument.replaceChild(
+          doc.documentElement,
+          destDocument.documentElement
+        );
+        const counter = document.querySelector('app-counter');
+        destDocument.body.appendChild(destDocument.adoptNode(counter));
+      };
+
       const login = () => {
-        const actualdata = loginBtn.textContent;
         loginBtn.setAttribute('inprogress', 'true');
         setTimeout(() => {
           loginBtn.removeAttribute('inprogress');
         }, 1000);
       };
+
       const register = () => {
-        const actualdata = registerBtn.textContent;
         registerBtn.setAttribute('inprogress', 'true');
         setTimeout(() => {
           registerBtn.removeAttribute('inprogress');
         }, 1000);
       };
 
-      const temp = () => {
-        console.log('temp clicked');
-      };
-
       class Button extends HTMLElement {
         constructor() {
           super();
+        }
+
+        connectedCallback() {
           const text = this.getAttribute('text');
           this.innerHTML = `<button class="btn">${text}</button>`;
         }
@@ -94,7 +119,26 @@
           }
         }
       }
+
+      class Counter extends HTMLElement {
+        // initialize a variable or an attribute
+        constructor() {
+          super();
+        }
+        // dom manipulation to be done
+        connectedCallback() {
+          this.innerHTML = 'counter';
+        }
+        // remove the dom manipulations
+        disconnectedCallback() {}
+        // listen to the attribute change example inprogress,
+        attributeChangedCallback() {}
+        // move or chnage child node to iframe or modal
+        adoptedCallback() {}
+      }
+
       customElements.define('app-button', Button);
+      customElements.define('app-counter', Counter);
     </script>
   </body>
 </html>
