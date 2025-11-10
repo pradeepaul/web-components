@@ -1,3 +1,5 @@
+
+
 class Counter extends HTMLElement {
   constructor() {
     super();
@@ -33,4 +35,5 @@ class Counter extends HTMLElement {
     console.log("adopted");
   }
 }
+
 customElements.define("app-counter", Counter);

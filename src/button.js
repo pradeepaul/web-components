@@ -36,17 +36,7 @@ btnTemplate.innerHTML = `
           }
         }
 
-        app-button[inprogress] {
-          transform: scale(1.1);
-          transform-origin: top left;
-        }
-
-        app-button {
-          display: block;
-        }
-        app-counter {
-          display: block;
-        }
+    
       </style>
       <button class="btn">button text</button>
 `;
@@ -58,7 +48,7 @@ class Button extends HTMLElement {
   connectedCallback() {
     const text = this.getAttribute('text');
     this.appendChild(btnTemplate.content.cloneNode(true));
-    this.button = document.querySelector("button");
+    this.button = this.querySelector("button");
     this.button.textContent = text;
   }
 
