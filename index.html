@@ -29,10 +29,15 @@
   </head>
   <body>
     <button type="button" class="btn btn-danger">Danger</button>
+    <app-button onclick="add()">Add</app-button>
+    <app-button onclick="remove()">Remove</app-button>
+    <app-card>
+      <h1 slot="card-header">heading</h1>
+      <p slot="card-body">body goes here</p>
+    </app-card>
 
-    <app-button onclick="add()" text="add"> </app-button>
-    <app-button onclick="remove()" text="remove"></app-button>
     <!-- <app-stopwatch></app-stopwatch> -->
+
     <script>
       const add = () => {
         const addButton = document.querySelector('app-button');
@@ -78,5 +83,6 @@
     <script src="./src/button.js" type="module"></script>
     <script src="./src/counter.js" type="module"></script>
     <script src="./src/stopwatch.js" type="module"></script>
+    <script src="./src/card.js" type="module"></script>
   </body>
 </html>

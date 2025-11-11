@@ -38,19 +38,20 @@ btnTemplate.innerHTML = `
 
     
       </style>
-      <button class="btn">button text</button>
+      <button class="btn"><slot>button</slot></button>
 `;
 class Button extends HTMLElement {
   constructor() {
     super();
-    this.attachShadow({ mode: "open" })
+    this.attachShadow({ mode: "open" });
   }
 
   connectedCallback() {
-    const text = this.getAttribute('text');
+    // const text = this.getAttribute('text');
     this.shadowRoot.appendChild(btnTemplate.content.cloneNode(true));
     this.button = this.shadowRoot.querySelector("button");
-    this.button.textContent = text;
+    // this.button.textContent = text;
+    this.initialValue = this.innerHTML;
   }
 
   set inprogress(progress) {
@@ -71,11 +72,11 @@ class Button extends HTMLElement {
 
   attributeChangedCallback(attr, old, newval) {
     if (newval) {
-      this.button.textContent = 'loading ...';
+      this.innerHTML = 'loading ...';
       this.button.setAttribute('disabled', true);
       this.button.classList.add('fading');
     } else {
-      this.button.textContent = this.getAttribute('text');
+      this.innerHTML = this.initialValue;
       this.button.classList.remove('fading');
       this.button.removeAttribute('disabled');
     }
