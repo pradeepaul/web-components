@@ -52,6 +52,13 @@ class Button extends HTMLElement {
     this.button = this.shadowRoot.querySelector("button");
     // this.button.textContent = text;
     this.initialValue = this.innerHTML;
+    this.button.addEventListener("click", (event) => {
+      event.stopPropagation();
+      this.button.dispatchEvent(new CustomEvent("click-app-button", {
+        bubbles: true,
+        composed: true,
+      }))
+    })
   }
 
   set inprogress(progress) {

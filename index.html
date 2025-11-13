@@ -28,16 +28,25 @@
     </style>
   </head>
   <body>
-    <button type="button" class="btn btn-danger">Danger</button>
+    <!-- <button type="button" class="btn btn-danger">Danger</button>
     <app-button onclick="add()">Add</app-button>
     <app-button onclick="remove()">Remove</app-button>
     <app-card>
       <h1 slot="card-header">heading</h1>
       <p slot="card-body">body goes here</p>
-    </app-card>
+    </app-card> -->
 
     <!-- <app-stopwatch></app-stopwatch> -->
-
+    <app-input label="username"></app-input>
+    <app-form></app-form>
+    <script>
+      document.addEventListener('input', () => {
+        console.log(event.target.tagName);
+      });
+      document.addEventListener('app-input', (event) => {
+        console.log(event.detail);
+      });
+    </script>
     <script>
       const add = () => {
         const addButton = document.querySelector('app-button');
@@ -84,5 +93,7 @@
     <script src="./src/counter.js" type="module"></script>
     <script src="./src/stopwatch.js" type="module"></script>
     <script src="./src/card.js" type="module"></script>
+    <script src="./src/input.js" type="module"></script>
+    <script src="./src/basic-form.js" type="module"></script>
   </body>
 </html>
